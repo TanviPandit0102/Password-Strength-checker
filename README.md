@@ -1,35 +1,94 @@
-# Password-Strength-checker
-A simple Python tool that checks the strength of a password and suggests a strong one if needed.
-This project uses regular expressions, string utilities, and random generation to evaluate password safety.
+Description
 
-# Features
+This project is a Python program that evaluates the strength of a user-entered password and generates a strong, secure password. It helps users understand whether their password is weak, medium, or strong based on several security criteria.
 
-Checks password strength
-Detects uppercase, lowercase, digits, and special characters
-Rates passwords as Weak, Medium, or Strong
-Generates a strong random password
-Beginner-friendly and easy to modify
+Features
 
-The checker scores a password based on:
+Password Strength Checker
 
-Length (8+ characters)
+Evaluates password based on length, uppercase letters, lowercase letters, digits, and special characters.
+
+Categorizes password as Weak, Medium, or Strong.
+
+Strong Password Generator
+
+Generates a 12-character secure password using letters, digits, and punctuation.
+
+Uses Python's random module for randomness.
+
+Technologies Used
+
+Python 3
+
+string module
+
+re (regular expressions)
+
+random module
+
+How It Works
+Function: check_strength(password)
+
+This function checks the password against five criteria:
+
+Length of at least 8 characters
+
 Contains uppercase letters
+
 Contains lowercase letters
-Contains numbers
+
+Contains digits
+
 Contains special characters
 
-The final rating:
+A score is calculated, and the password is labeled as Weak, Medium, or Strong.
 
-0–2 points → Weak
-3–4 points → Medium
-5 points → Strong
+Function: generate_strong_password()
 
-Usage:-
-Run the script:
-python password_checker.py
+This function generates a password by selecting 12 random characters from a combination of uppercase letters, lowercase letters, digits, and punctuation.
+import string
+import re
+import random
 
+def check_strength(password):
+    score = 0
 
+    if len(password) >= 8:
+        score += 1
+    if re.search(r"[A-Z]", password):
+        score += 1
+    if re.search(r"[a-z]", password):
+        score += 1
+    if re.search(r"\d", password):
+        score += 1
+    if re.search(r"[!@#$%^&*(),.?\":{}|<>]", password):
+        score += 1
 
+    if score <= 2:
+        return "Weak"
+    elif score == 3 or score == 4:
+        return "Medium"
+    else:
+        return "Strong"
 
+def generate_strong_password():
+    all_chars = string.ascii_letters + string.digits + string.punctuation
+    return ''.join(random.choices(all_chars, k=12))
 
- 
+password = input("Enter password to check: ")
+print("Strength:", check_strength(password))
+print("Suggested strong password:", generate_strong_password())
+Enter password to check: Hello123
+Strength: Medium
+Suggested strong password: rT9#Km2!Qp@4
+Future Improvements
+
+Add a graphical interface
+
+Add password entropy calculation
+
+Display detailed feedback for each security rule
+
+License
+
+This project is open-source and free to use.
